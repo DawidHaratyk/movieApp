@@ -1,0 +1,103 @@
+.search {
+    display: flex;
+    align-items: center;
+    margin: 20px 35px 10px 35px;
+    width: 300px;
+
+    &__thumb {
+        pointer-events: none;
+        position: absolute;
+        z-index: 1;
+        width: 300px;
+        height: 0;
+        outline: none;
+
+        &,
+        &::-webkit-slider-thumb {
+            -webkit-appearance: none;
+        }
+
+        &::-webkit-slider-thumb {
+            background-color: #e27a3f;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 0 1px 1px #ff8239;
+            cursor: pointer;
+            height: 16px;
+            width: 16px;
+            margin-top: 4px;
+            pointer-events: all;
+            position: relative;
+        }
+
+        .thumb::-moz-range-thumb {
+            background-color: #e27a3f;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 0 1px 1px #ff8239;
+            cursor: pointer;
+            height: 16px;
+            width: 16px;
+            margin-top: 4px;
+            pointer-events: all;
+            position: relative;
+        }
+    }
+
+    .slider {
+        position: relative;
+        width: 300px;
+        color: rgb(80, 80, 80);
+
+        &__line {
+            position: relative;
+            width: 100%;
+            background-color: #ddd;
+            border-radius: 15px;
+            height: 4px;
+        }
+
+        &__space {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background-color: #e27a3f;
+            z-index: 2;
+        }
+
+        &__headline {
+            font-weight: 500;
+            margin-bottom: 35px;
+            font-size: 16px;
+        }
+
+        &__values-container {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            font-size: 10px;
+        }
+
+        &__min-value,
+        &__max-value {
+            position: absolute;
+            top: -30px;
+            left: 0;
+        }
+
+        &__max-value {
+            left: 100%;
+            transform: translateX(-100%);
+        }
+
+        &__current-value {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+        }
+    }
+}

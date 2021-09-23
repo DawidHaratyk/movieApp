@@ -1,0 +1,15 @@
+.movies__submit-btn {
+    margin-left: 185px;
+    padding: 10px 22px;
+    color: rgb(231, 231, 231);
+    background-color: #e27a3f;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.2s;
+    transform: translateX(-50%);
+
+    &:hover {
+        color: white;
+    }
+}

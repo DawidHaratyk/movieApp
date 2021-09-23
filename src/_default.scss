@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: arial, sans-serif;
+}
+
+.movies-content {
+    display: flex;
+
+    @media (max-width: 770px) {
+        display: block;
+    }
+}
+
+.movies-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
