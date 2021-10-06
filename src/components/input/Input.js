@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 
 function Input({
   min,
@@ -26,8 +26,7 @@ function Input({
         (maxValue[id] - minValue[id]) * stepInPercent
       }%`;
     }
-    // popraw wersję na kategorię lat (problem w tym że gdy najpierw przesuwamy końcowy input to jest błąd)
-  }, [minValue, maxValue, title, min]);
+  }, [minValue, maxValue, title, min, id]);
 
   return (
     <div className="search">
@@ -37,9 +36,15 @@ function Input({
         max={max}
         value={minValue[id]}
         onChange={(event) => {
-          console.log("LOL");
           const value = Math.min(Number(event.target.value), maxValue[id] - 1);
-          setMinValue(value);
+          const newArray = minValue.map((item, key) => {
+            if (key === id) {
+              return value;
+            } else {
+              return item;
+            }
+          });
+          setMinValue(newArray);
         }}
         className="search__thumb search__thumb--left"
         data-value="100"
@@ -51,7 +56,14 @@ function Input({
         value={maxValue[id]}
         onChange={(event) => {
           const value = Math.max(Number(event.target.value), minValue[id] + 1);
-          setMaxValue(value);
+          const newArray = maxValue.map((item, key) => {
+            if (key === id) {
+              return value;
+            } else {
+              return item;
+            }
+          });
+          setMaxValue(newArray);
         }}
         className="search__thumb search__thumb--right"
         data-value="280"

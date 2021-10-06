@@ -1,18 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 
-function CategorySelect({ title, categories }) {
-  const [selectedCategory, setSelectedCategory] = useState({
-    category: categories[0],
-  });
-
+function CategorySelect({ title, categories, setCategory }) {
   const categoriesList = categories.map((category, key) => (
-    <option value={category} key={key}>
-      {category}
+    <option value={category.id} key={key}>
+      {category.name}
     </option>
   ));
 
   const handleCategoryChange = (e) => {
-    setSelectedCategory({ category: e.target.value });
+    const currentId = e.target.value;
+    setCategory(currentId);
   };
 
   return (

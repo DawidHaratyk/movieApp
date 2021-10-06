@@ -1,0 +1,72 @@
+.movie {
+    display: flex;
+    flex-direction: column;
+    color: #555;
+
+    &__image {
+        width: 100%;
+        min-height: 550px;
+        background-size: cover;
+        background-position: center center;
+    }
+
+    &__name {
+        margin-top: 50px;
+        font-size: 29px;
+        color: black;
+    }
+
+    &__year {
+        color: #bbb;
+        font-weight: normal;
+    }
+
+    &__category-separator {
+        display: inline-block;
+        width: 1px;
+        height: 14px;
+        background-color: gray;
+        margin: 0 10px;
+    }
+
+    &__categories {
+        display: flex;
+        margin: 25px 0;
+    }
+
+    &__category {
+        display: flex;
+        align-items: center;
+
+        &-name {
+            font-size: 14px;
+        }
+    }
+
+    &__detail {
+        font-size: 14px;
+        color: #888;
+        margin: 35px 0;
+
+        &-result {
+            color: black;
+        }
+    }
+
+    &__content {
+        padding: 0 70px 60px 70px;
+    }
+
+    &__overview {
+        &-headline {
+            font-size: 21px;
+            margin-bottom: 20px;
+            color: black;
+        }
+
+        &-text {
+            line-height: 160%;
+            color: #888;
+        }
+    }
+}
