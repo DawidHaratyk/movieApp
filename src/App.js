@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation, Switch, Route } from "react-router-dom";
 import Input from "./components/input/Input";
 import Headline from "./components/headline/Headline";
@@ -15,7 +15,10 @@ function App() {
   const [category, setCategory] = useState(28);
   const [moviesList, setMoviesList] = useState([]);
   const location = useLocation();
-  const dataRef = useRef();
+  const [flag, setFlag] = useState(false);
+
+  const url = `https://api.themoviedb.org/3${location.pathname}?api_key=08b6d4985e66ef10046668e8a1e80b90`;
+  // console.log(url);
 
   const API = `https://api.themoviedb.org/3/discover/movie?api_key=08b6d4985e66ef10046668e8a1e80b90&primary_release_date.gte=${minValue[0]}-01-01&primary_release_date.lte=${maxValue[0]}-01-01&with_genres=${category}&vote_average.gte=${minValue[1]}&vote_average.lte=${maxValue[1]}&with_runtime.gte=${minValue[2]}&with_runtime.lte=${maxValue[2]}`;
 
@@ -24,8 +27,6 @@ function App() {
       .then((response) => response.json())
       .then((data) => setMoviesList(data.results));
   };
-
-  dataRef.current = handleSubmit;
 
   const inputsList = searchData.map((item, id) => {
     const { min, max, title } = item;
@@ -44,6 +45,24 @@ function App() {
     );
   });
 
+  async function showMovieCardView() {
+    console.log(url);
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
+
+    //   fetch(
+    //     `https://api.themoviedb.org/3${window.location.pathname}?api_key=08b6d4985e66ef10046668e8a1e80b90`
+    //   )
+    //     .then((response) => {
+    //       response.json();
+    //     })
+    //     .then((data) => {
+    //       console.log(data);
+    //     });
+    // setFlag((prevState) => !prevState);
+  }
+
   const moviesContainer = moviesList.map((movie, key) => {
     const { title, poster_path, id } = movie;
     if (poster_path === null) {
@@ -55,6 +74,8 @@ function App() {
             <MovieCard
               image={`https://image.tmdb.org/t/p/w500${poster_path}`}
               name={title}
+              showMovieCardView={showMovieCardView}
+              // onClick={showMovieCardView}
             />
             {/* nie cała wysokość karty działa na kliknięcie */}
           </Link>
@@ -63,31 +84,29 @@ function App() {
     }
   });
 
-  const currentRoutes = moviesList.map((movie, key) => {
-    // async function getMovieRuntime(url = "") {
-    //   const response = await fetch(url);
-    //   return response.json();
-    // }
-    // getMovieRuntime(
-    //   `https://api.themoviedb.org/3/movie/${movie.id}?api_key=08b6d4985e66ef10046668e8a1e80b90`
-    // ).then((data) => {
-    //   if (data.runtime >= minValue[2] && data.runtime <= maxValue[2]) {
-    return (
-      <Route
-        path={`/movie/${movie.id}`}
-        exact
-        render={() => <MovieDetails movie={movie} categories={categories} />}
-        key={key}
-      />
-    );
-    // }
-    // });
-  });
-
-  // console.log(currentRoutes);
+  // const currentRoutes = moviesList.map((movie, key) => {
+  // async function getMovieRuntime(url = "") {
+  //   const response = await fetch(url);
+  //   return response.json();
+  // }
+  // getMovieRuntime(
+  //   `https://api.themoviedb.org/3/movie/${movie.id}?api_key=08b6d4985e66ef10046668e8a1e80b90`
+  // ).then((data) => {
+  //   if (data.runtime >= minValue[2] && data.runtime <= maxValue[2]) {
+  // return (
+  //   <Route
+  //     path={`/movie/${movie.id}`}
+  //     exact
+  //     render={() => <MovieDetails movie={movie} categories={categories} />}
+  //     key={key}
+  //   />
+  // );
+  //   }
+  // });
+  // });
 
   useEffect(() => {
-    dataRef.current();
+    handleSubmit();
   }, []);
 
   // useEffect(() => {
@@ -108,7 +127,7 @@ function App() {
     return (
       <div className="App">
         <Headline title="Movies App" />
-        <Switch>{currentRoutes}</Switch>
+        <Switch>{/* {currentRoutes} */}</Switch>
       </div>
     );
   } else {
@@ -120,10 +139,11 @@ function App() {
             <CategorySelect
               title="Genre"
               categories={categories}
+              category={category}
               setCategory={setCategory}
             />
             {inputsList}
-            <SubmitBtn handleSubmit={handleSubmit} dataRef={dataRef} />
+            <SubmitBtn handleSubmit={handleSubmit} />
           </div>
           <ul className="movies-list">{moviesContainer}</ul>
         </div>

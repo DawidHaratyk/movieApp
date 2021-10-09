@@ -1,10 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 
-function SubmitBtn({ handleSubmit, dataRef }) {
-  useEffect(() => {
-    dataRef.current();
-  }, []);
-
+function SubmitBtn({ handleSubmit }) {
   return (
     <button className="movies__submit-btn" onClick={handleSubmit}>
       Search

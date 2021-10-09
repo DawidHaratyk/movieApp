@@ -1,6 +1,6 @@
 import React from "react";
 
-function CategorySelect({ title, categories, setCategory }) {
+function CategorySelect({ title, categories, category, setCategory }) {
   const categoriesList = categories.map((category, key) => (
     <option value={category.id} key={key}>
       {category.name}
@@ -18,6 +18,7 @@ function CategorySelect({ title, categories, setCategory }) {
         <h3 className="categories__headline">{title}</h3>
         <select
           name="categories"
+          value={category}
           className="categories__selection"
           onChange={(e) => handleCategoryChange(e)}
         >
