@@ -179,10 +179,11 @@ html {
           box-shadow: 0 10px 28px -7px #eee;
   cursor: pointer;
   list-style: none;
+  text-decoration: none;
 }
 
 .card a {
-  text-decoration: none;
+  height: 100%;
 }
 
 @media (min-width: 400px) {

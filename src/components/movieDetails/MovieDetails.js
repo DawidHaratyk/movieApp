@@ -1,55 +1,46 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import Headline from "../../components/headline/Headline";
 
-function MovieDetails({ movie, categories }) {
-  const [runtime, setRuntime] = useState(null);
+function MovieDetails() {
+  const [movie, setMovie] = useState({});
+  const { id } = useParams();
 
   const {
     backdrop_path,
     original_title,
     release_date,
-    genre_ids,
+    genres,
     vote_average,
     overview,
+    runtime,
   } = movie;
-  const releaseDate = release_date.substring(0, 4);
-  const list = [];
 
-  const movieCategories = genre_ids.map((id, counter) => {
-    categories.filter((category, key) => {
-      if (id === category.id) {
-        list.push(
-          <div className="movie__category" key={key}>
-            <span className="movie__category-name">{category.name}</span>
-            {counter === genre_ids.length - 1 ? null : (
-              <span className="movie__category-separator"></span>
-            )}
-          </div>
-        );
-        return null;
-      }
-    });
-    if (counter === genre_ids.length - 1) {
-      return list;
-    } else {
-      return null;
-    }
+  const genresList = genres ? genres : [];
+
+  const movieCategories = genresList.map((genre, key) => {
+    return (
+      <div className="movie__category" key={key}>
+        <span className="movie__category-name">{genre.name}</span>
+        {key === genresList.length - 1 ? null : (
+          <span className="movie__category-separator"></span>
+        )}
+      </div>
+    );
   });
 
-  const getMovieRuntime = () => {
+  useEffect(() => {
     fetch(
-      `https://api.themoviedb.org/3/movie/${movie.id}?api_key=08b6d4985e66ef10046668e8a1e80b90`
+      `https://api.themoviedb.org/3/movie/${id}?api_key=08b6d4985e66ef10046668e8a1e80b90`
     )
       .then((response) => response.json())
-      .then((data) => setRuntime(data.runtime));
-  };
-
-  useEffect(() => {
+      .then((data) => setMovie(data));
     window.scrollTo(0, 0);
-    getMovieRuntime();
-  }, []);
+  }, [id]);
 
   return (
     <div className="movie">
+      <Headline title="Movie" />
       <div
         className="movie__image"
         style={{
@@ -58,7 +49,10 @@ function MovieDetails({ movie, categories }) {
       ></div>
       <div className="movie__content">
         <h3 className="movie__name">
-          {original_title} <span className="movie__year">({releaseDate})</span>
+          {original_title}{" "}
+          <span className="movie__year">
+            ({release_date ? release_date.substring(0, 4) : null})
+          </span>
         </h3>
         <div className="movie__categories">{movieCategories}</div>
         <p className="movie__detail">

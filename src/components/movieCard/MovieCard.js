@@ -1,8 +1,8 @@
 import React from "react";
 
-function MovieCard({ image, name, showMovieCardView }) {
+function MovieCard({ image, name }) {
   return (
-    <div className="card-content" onClick={showMovieCardView}>
+    <div className="card-content">
       <img src={image} alt="film" className="card__image" />
       <h5 className="card__headline">{name}</h5>
     </div>
