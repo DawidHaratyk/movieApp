@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Input from "./components/input/Input";
 import Headline from "./components/headline/Headline";
@@ -13,6 +13,7 @@ function App() {
   const [maxValue, setMaxValue] = useState([2021, 10, 300]);
   const [category, setCategory] = useState(28);
   const [moviesList, setMoviesList] = useState([]);
+  const ref = useRef();
 
   const API = `https://api.themoviedb.org/3/discover/movie?api_key=08b6d4985e66ef10046668e8a1e80b90&primary_release_date.gte=${minValue[0]}-01-01&primary_release_date.lte=${maxValue[0]}-01-01&with_genres=${category}&vote_average.gte=${minValue[1]}&vote_average.lte=${maxValue[1]}&with_runtime.gte=${minValue[2]}&with_runtime.lte=${maxValue[2]}`;
 
@@ -21,6 +22,8 @@ function App() {
       .then((response) => response.json())
       .then((data) => setMoviesList(data.results));
   };
+
+  ref.current = handleSubmit;
 
   const inputsList = searchData.map((item, id) => {
     const { min, max, title } = item;
